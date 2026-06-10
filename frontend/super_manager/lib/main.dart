@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:super_manager/components/nav_bar.dart';
+import 'package:super_manager/pages/store_map.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,7 +48,7 @@ class _RootPageState extends State<RootPage>{
 
   final List<Widget> _pages = [
     Center(child: Text('買い物')),
-    Center(child: Text('店舗')),
+    Center(child: StoreMap()),
     Center(child: Text('商品')),
   ];
 
