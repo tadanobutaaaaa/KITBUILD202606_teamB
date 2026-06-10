@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'super-manager',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -43,27 +43,28 @@ class RootPage extends StatefulWidget {
   State<RootPage> createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage>{
+class _RootPageState extends State<RootPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
     Center(child: Text('買い物')),
-    Center(child: StoreMap()),
+    Center(child: StoreSearchScreen()),
     Center(child: Text('商品')),
   ];
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
         children: [
-          NavRail(index: _selectedIndex, onDestinationSelected: (i) => setState(() => _selectedIndex = i)),
-          Expanded(child: _pages[_selectedIndex])
+          NavRail(
+            index: _selectedIndex,
+            onDestinationSelected: (i) => setState(() => _selectedIndex = i),
+          ),
+          Expanded(child: _pages[_selectedIndex]),
         ],
-      )
-      );
+      ),
+    );
   }
 }
 
