@@ -1,23 +1,40 @@
-package godatabase
+package main
 
 import (
 	"database/sql"
-	_ "github.com/lib/pq"
+	"fmt"
 	"log"
+	"os"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	dsn := "host=localhost port=5432 user=postgres password=password dbname=sampledb sslmode=disable"
+	loadEnv()
+	err := godotenv.Load(".env")
 
-	db, err := sql.Open("postgres", dsn)
+	db, err := sql.Open("mysql", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	if err = db.Ping(); err != nil {
-		log.Fatal("DB接続失敗: ", err)
+	err = db.Ping()
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		log.Println("データベースに接続しました！")
+	}
+}
+
+func loadEnv() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	log.Println("DB接続成功")
+	databaseUrl := os.Getenv("DATABASE_URL")
+
+	fmt.Println("DATABASE_URL:", databaseUrl)
 }
