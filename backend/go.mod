@@ -1,4 +1,4 @@
-module github.com/tadanobutaaaaa/KITBUILD202606_teamB.git
+module github.com/tadanobutaaaaa/KITBUILD202606_teamB
 
 go 1.26.4
 
