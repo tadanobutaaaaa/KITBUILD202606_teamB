@@ -60,7 +60,7 @@ class StoreRepository {
   }
 
   //店舗削除
-  Future<void> deleteStoreProduct(int id) async {
+  Future<void> deleteStore(int id) async {
     if (!_useApi) {
       return;
     }
@@ -72,7 +72,7 @@ class StoreRepository {
   }
 
   //店舗更新
-  Future<void> updateStoreProduct(StoreProduct product) async {
+  Future<void> updateStore(StoreProduct product) async {
     if (!_useApi) {
       return;
     }
