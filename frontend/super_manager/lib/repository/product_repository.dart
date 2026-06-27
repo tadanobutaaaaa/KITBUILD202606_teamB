@@ -18,7 +18,7 @@ class ProductRepository {
       ];
     }
     final res = await http.get(
-      Uri.parse('$_baseUrl/products/category/$categoryId'),
+      Uri.parse('$_baseUrl/categories/$categoryId/products'),
     );
     if (res.statusCode != 200) {
       throw Exception('エラー：${res.statusCode}');
@@ -52,7 +52,7 @@ class ProductRepository {
         ),
       ];
     }
-    final res = await http.get(Uri.parse('$_baseUrl/products/$id/stores'));
+    final res = await http.get(Uri.parse('$_baseUrl/store-products/$id'));
     if (res.statusCode != 200) {
       throw Exception('エラー：${res.statusCode}');
     }
@@ -68,7 +68,7 @@ class ProductRepository {
       return;
     }
     final res = await http.post(
-      Uri.parse('$_baseUrl/products'),
+      Uri.parse('$_baseUrl/store-products'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(product),
     );
@@ -83,7 +83,7 @@ class ProductRepository {
     if (!_useApi) {
       return;
     }
-    final res = await http.delete(Uri.parse('$_baseUrl/products/$id'));
+    final res = await http.delete(Uri.parse('$_baseUrl/store-products/$id'));
     if (res.statusCode != 200 && res.statusCode != 204) {
       throw Exception('エラー：${res.statusCode}');
     }
@@ -96,7 +96,7 @@ class ProductRepository {
       return;
     }
     final res = await http.patch(
-      Uri.parse('$_baseUrl/products/$id'),
+      Uri.parse('$_baseUrl/store-products/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(product),
     );
