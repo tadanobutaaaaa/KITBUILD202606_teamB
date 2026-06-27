@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:string_similarity/string_similarity.dart';
 import 'package:super_manager/model/store.dart';
-import 'package:super_manager/widget/map_form_modal.dart';
+import 'package:super_manager/components/map_form_modal.dart';
 
 class StoreSearchScreen extends StatefulWidget {
   const StoreSearchScreen({super.key});
