@@ -7,8 +7,8 @@ import 'package:super_manager/model/store_product.dart';
 class ProductRepository {
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? 'http://localhost:8080';
   bool get _useApi => dotenv.env['USE_API'] == 'true';
-  //カテゴリIDで商品一覧
-  //GET /product?category=val
+
+  //商品一覧取得
   Future<List<Product>> fetchProducts(int categoryId) async {
     if (!_useApi) {
       await Future.delayed(const Duration(milliseconds: 300));
@@ -18,7 +18,7 @@ class ProductRepository {
       ];
     }
     final res = await http.get(
-      Uri.parse('$_baseUrl/products/?category=$categoryId/category'),
+      Uri.parse('$_baseUrl/product?category=$categoryId/category'),
     );
     if (res.statusCode != 200) {
       throw Exception('エラー：${res.statusCode}');
@@ -29,8 +29,8 @@ class ProductRepository {
         .toList();
   }
 
-  //商品登録
-  Future<List<StoreProduct>> fetchStoreProducts(int productId) async {
+  //商品詳細取得
+  Future<List<StoreProduct>> fetchStoreProducts(int id) async {
     if (!_useApi) {
       await Future.delayed(const Duration(milliseconds: 300));
       return [
@@ -53,7 +53,7 @@ class ProductRepository {
       ];
     }
     final res = await http.get(
-      Uri.parse('$_baseUrl/products?product=$productId/stores'),
+      Uri.parse('$_baseUrl/product?product=$id/stores'),
     );
     if (res.statusCode != 200) {
       throw Exception('エラー：${res.statusCode}');
@@ -64,41 +64,41 @@ class ProductRepository {
         .toList();
   }
 
-  Future<void> createProduct(
-    int categoryId,
-    String productName,
-    int price,
-    int weight,
-  ) async {
+  //商品詳細作成
+  Future<void> createStoreProduct(StoreProduct product) async {
     if (_useApi) {
       return;
     }
-    final res = await http.post(Uri.parse('$_baseUrl/products'));
-    if (res.statusCode != 201) {
+    final res = await http.post(
+      Uri.parse('$_baseUrl/product'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(product),
+    );
+    if (res.statusCode != 201 && res.statusCode != 200) {
       throw Exception('エラー：${res.statusCode}');
     }
     return;
   }
 
-  //Delete
-  Future<void> deleteProduct(int id) async {
+  //商品詳細削除
+  Future<void> deleteStoreProduct(int id) async {
     if (_useApi) {
       return;
     }
-    final res = await http.delete(Uri.parse('$_baseUrl/products/$id'));
+    final res = await http.delete(Uri.parse('$_baseUrl/product/$id'));
     if (res.statusCode != 200 && res.statusCode != 204) {
       throw Exception('エラー：${res.statusCode}');
     }
     return;
   }
 
-  //Update
-  Future<void> updateProduct(Product product) async {
+  //商品詳細更新
+  Future<void> updateStoreProduct(StoreProduct product) async {
     if (_useApi) {
       return;
     }
     final res = await http.patch(
-      Uri.parse('$_baseUrl/products'),
+      Uri.parse('$_baseUrl/product'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(product),
     );
