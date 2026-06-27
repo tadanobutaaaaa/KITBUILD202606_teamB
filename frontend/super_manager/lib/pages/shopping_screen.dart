@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:super_manager/model/item.dart';
+
+import 'package:super_manager/model/product.dart';
 import 'package:super_manager/model/store.dart';
 import 'package:super_manager/pages/shopping/shopping_category_page.dart';
 
@@ -12,6 +13,7 @@ class ShoppingScreen extends StatefulWidget {
 
 class _ShoppingScreenState extends State<ShoppingScreen> {
   final Store _store = Store(
+    id: 1,
     name: 'スーパーA',
     kanaName: 'すーぱーえー',
     location: 'ACT314',
@@ -20,14 +22,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
     longitude: 135.0,
     isCheap: true,
   );
-  final List<Item> _items = [
-    Item(
-      name: "とまと",
-      price: 1000,
-      description: "TOMATO",
-      storename: "サンディ和歌山店",
-    ),
-  ];
+  final List<Product> _items = [Product(id: 1, name: "とまと", categoryId: 1)];
 
   final ScrollController _scrollController = ScrollController();
 
@@ -69,7 +64,6 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                                     child: ListTile(
                                       leading: Icon(Icons.shopping_bag),
                                       title: Text(_items[index].name),
-                                      subtitle: Text(_items[index].description),
                                     ),
                                   );
                                 },
@@ -82,7 +76,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                               backgroundColor: Colors.lightGreen[200],
                             ),
                             onPressed: () async {
-                              final item = await Navigator.push<Item>(
+                              final item = await Navigator.push<Product>(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) => ShoppingCategoryPage(),
