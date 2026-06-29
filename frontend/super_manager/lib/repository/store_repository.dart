@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:super_manager/model/store.dart';
-import 'package:super_manager/model/store_product.dart';
 
 class StoreRepository {
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? 'http://localhost:8080';
@@ -60,7 +59,7 @@ class StoreRepository {
   }
 
   //店舗削除
-  Future<void> deleteStoreProduct(int id) async {
+  Future<void> deleteStore(int id) async {
     if (!_useApi) {
       return;
     }
@@ -72,14 +71,14 @@ class StoreRepository {
   }
 
   //店舗更新
-  Future<void> updateStoreProduct(StoreProduct product) async {
+  Future<void> updateStore(Store store, int id) async {
     if (!_useApi) {
       return;
     }
     final res = await http.patch(
-      Uri.parse('$_baseUrl/stores'),
+      Uri.parse('$_baseUrl/stores/$id'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(product),
+      body: jsonEncode(store),
     );
     if (res.statusCode != 200 && res.statusCode != 204) {
       throw Exception('エラー：${res.statusCode}');
